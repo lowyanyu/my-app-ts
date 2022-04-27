@@ -1,7 +1,19 @@
 .Table-even-row {
   background-color: #ccc;
+  color: #000;
+}
+
+.Table-even-row--dark {
+  background-color: #000;
+  color: #fff;
 }
 
 .Table-odd-row {
   background-color: #eee;
+  color: #000;
+}
+
+.Table-odd-row--dark {
+  background-color: #777;
+  color: #fff;
 }

@@ -3,6 +3,7 @@ import Table from './components/Table';
 import user from './user.json';
 import { useEffect, useRef, useState } from 'react';
 import { User } from './model/user.model';
+import { ThemeContext } from './components/Theme';
 
 function App() {
   const [userList, setUserList] = useState(user);
@@ -11,6 +12,8 @@ function App() {
   const userId = useRef<HTMLInputElement>(null);
   const userAccount = useRef<HTMLInputElement>(null);
   const userName = useRef<HTMLInputElement>(null);
+
+  const [dark, setDark] = useState(false);
 
   const fetchUserList = () => {
     fetch('http://localhost:3000/user.json')
@@ -34,33 +37,36 @@ function App() {
    */ 
 
   return (
-    <div style={{padding: '20px'}}>
-      <div>
-        <h2>使用者清單</h2>
-        <Table data={userList}></Table>
+    <ThemeContext.Provider value={dark}>
+      <div style={{padding: '20px'}}>
+        <button onClick={() => setDark(!dark)}>Switch to {dark ? 'Light' : 'Dark'}</button>
+        <div>
+          <h2>使用者清單</h2>
+          <Table data={userList}></Table>
+        </div>
+        <div>
+          <h2>新增使用者</h2>
+          <form id="form">
+            <div>
+              <label htmlFor="userId">ID: </label>
+              <input id="userId" ref={userId}/>
+            </div>
+            <div>
+              <label htmlFor="userAccount">帳號: </label>
+              <input id="userAccount" ref={userAccount}/>
+            </div>
+            <div>
+              <label htmlFor="userName">名稱: </label>
+              <input id="userName" ref={userName}/>
+            </div>
+            <div style={{marginTop: '10px'}}>
+              {/* <button type="button" onClick={e => submitForm(e)}>Submit</button> */}
+              <button type="button" onClick={submit}>Submit</button>
+            </div>        
+          </form>
+        </div>
       </div>
-      <div>
-        <h2>新增使用者</h2>
-        <form id="form">
-          <div>
-            <label htmlFor="userId">ID: </label>
-            <input id="userId" ref={userId}/>
-          </div>
-          <div>
-            <label htmlFor="userAccount">帳號: </label>
-            <input id="userAccount" ref={userAccount}/>
-          </div>
-          <div>
-            <label htmlFor="userName">名稱: </label>
-            <input id="userName" ref={userName}/>
-          </div>
-          <div style={{marginTop: '10px'}}>
-            {/* <button type="button" onClick={e => submitForm(e)}>Submit</button> */}
-            <button type="button" onClick={submit}>Submit</button>
-          </div>        
-        </form>
-      </div>
-    </div>
+    </ThemeContext.Provider>
   );
 
   function submit(): void {
