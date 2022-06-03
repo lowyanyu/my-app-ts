@@ -59,8 +59,8 @@ function App() {
               <input id="userName"/>
             </div>
             <div style={{marginTop: '10px'}}>
-              <button type="button" onClick={e => submitForm(e)}>Submit</button>
-              {/* <button type="button" onClick={submit}>Submit</button> */}
+              {/* <button type="button" onClick={e => submitForm(e)}>Submit</button> */}
+              <button type="button" onClick={submit}>Submit</button>
             </div>
           </form>
         </div>
@@ -68,6 +68,7 @@ function App() {
     </ThemeContext.Provider>
   );
 
+  /*
   function submitForm(e: any): void {
     const form = e.target.form;
     setNewUser({
@@ -78,8 +79,8 @@ function App() {
     // 假設真實情況下，這裡就會去打 API 新增使用者
     form.reset();
 	}
+  */
 
-  /*
   function submit(): void {
     if (userForm.current) {
       const form = userForm.current;
@@ -90,7 +91,6 @@ function App() {
       });
     }
   }
-  */
 }
 
 export default App;
