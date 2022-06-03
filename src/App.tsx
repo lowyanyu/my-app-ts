@@ -1,31 +1,37 @@
 import './App.css';
 import Table from './components/Table';
 import user from './user.json';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useReducer, useRef, useState } from 'react';
 import { User } from './model/user.model';
 import { ThemeContext } from './contexts/ThemeContext';
 import MenuPage from './components/MenuPage';
+import { StoreContext, StoreProvider } from './stores/UserStore';
 
 function App() {
-  const [userList, setUserList] = useState(user);
-  const [newUser, setNewUser] = useState<User | null>(null);
+  // const [userList, setUserList] = useState(user);
+  // const [newUser, setNewUser] = useState<User | null>(null);
+  // const [userList, dispatch] = useReducer(reducer, []);
+  const {state, dispatch} = useContext(StoreContext);
 
   const [dark, setDark] = useState(false);
   const userForm = useRef<HTMLFormElement>(null);
 
-  const fetchUserList = async () => {
-    await fetch('http://localhost:3000/user.json')
-      .then(response => response.json())
-      .then(data => setUserList(data));
-  }
-
+  // const fetchUserList = async () => {
+  //   await fetch('http://localhost:3000/user.json')
+  //     .then(response => response.json())
+  //     .then(data => setUserList(data));
+  // }
   useEffect(() => {
-    if (newUser !== null) {
-      // 假設真實情況下，這裡就會去打 API 更新 userList 的資料
-      // fetchUserList();
-      setUserList([...userList, newUser]);
-    }
-  }, [newUser]) // dependecies: 「組件渲染完後，如果 dependencies 有改變，才會呼叫 useEffect 內的 function」
+    userForm.current?.reset();
+  });
+
+  // useEffect(() => {
+  //   if (newUser !== null) {
+  //     // 假設真實情況下，這裡就會去打 API 更新 userList 的資料
+  //     // fetchUserList();
+  //     setUserList([...userList, newUser]);
+  //   }
+  // }, [newUser]); // dependecies: 「組件渲染完後，如果 dependencies 有改變，才會呼叫 useEffect 內的 function」
 
   /** 
    * 這裡會 warning missing dependency: userList
@@ -35,13 +41,14 @@ function App() {
    */ 
 
   return (
-    <ThemeContext.Provider value={dark}>
+    <StoreProvider>
+    {/* <ThemeContext.Provider value={dark}> */}
       <MenuPage />
       <div style={{padding: '20px'}}>
-        <button onClick={() => setDark(!dark)}>Switch to {dark ? 'Light' : 'Dark'}</button>
+        {/* <button onClick={() => setDark(!dark)}>Switch to {dark ? 'Light' : 'Dark'}</button> */}
         <div>
           <h2>使用者清單</h2>
-          <Table data={userList} />
+          <Table />
         </div>
         <div>
           <h2>新增使用者</h2>
@@ -65,7 +72,8 @@ function App() {
           </form>
         </div>
       </div>
-    </ThemeContext.Provider>
+    {/* </ThemeContext.Provider> */}
+    </StoreProvider>
   );
 
   /*
@@ -84,11 +92,20 @@ function App() {
   function submit(): void {
     if (userForm.current) {
       const form = userForm.current;
-      setNewUser({
+      const userVal = {
         userId: form.userId.value,
         userAccount: form.userAccount.value,
         userName: form.userName.value
+      };
+      dispatch({
+        type: 'add',
+        data: userVal
       });
+      // setNewUser({
+      //   userId: form.userId.value,
+      //   userAccount: form.userAccount.value,
+      //   userName: form.userName.value
+      // });
     }
   }
 }

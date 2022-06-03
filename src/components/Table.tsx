@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { User } from "../model/user.model";
+import { StoreContext } from "../stores/UserStore";
 import { TableEvenRow, TableOddRow } from "./TableRow";
 
 function renderData(users: User[], dark: boolean) {
@@ -13,9 +14,10 @@ function renderData(users: User[], dark: boolean) {
 	return rows;
 }
 
-function Table(props: {data: User[]}) {
-	const users = props.data;
+function Table() {
+  const {state, dispatch} = useContext(StoreContext);
 	const [dark, setDark] = useState(false);
+  console.log(dispatch);
 	return (
 		<div>
 			<button onClick={() => setDark(!dark)}>Click me</button>
@@ -26,7 +28,7 @@ function Table(props: {data: User[]}) {
 					<th>帳號</th>
 					<th>名稱</th>
 				</tr>
-				{renderData(users, dark)}
+				{renderData(state, dark)}
 			</tbody>
 		</table>
 		</div>
