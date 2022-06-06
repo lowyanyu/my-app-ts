@@ -15,7 +15,6 @@ export const StoreContext = createContext<{
 
 export const StoreProvider = (props: any) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  console.log([state, dispatch]);
 
   return (
     <StoreContext.Provider value={{state, dispatch}}>
@@ -23,5 +22,3 @@ export const StoreProvider = (props: any) => {
     </StoreContext.Provider>
   );
 };
-
-export default reducer;

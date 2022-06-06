@@ -2,10 +2,11 @@ import './TableRow.css';
 import { User } from "../model/user.model";
 import { useContext } from 'react';
 import { StoreContext } from '../stores/UserStore';
+import { ThemeContext } from '../contexts/ThemeContext';
 
-function TableEvenRow(props: {user: User, darkTheme: boolean}) {
+function TableEvenRow(props: {user: User}) {
   const user = props.user;
-  const dark = props.darkTheme;
+  const dark = useContext(ThemeContext);
   const {state, dispatch} = useContext(StoreContext);
 
   return (
@@ -18,9 +19,9 @@ function TableEvenRow(props: {user: User, darkTheme: boolean}) {
   )
 }
 
-function TableOddRow(props: {user: User, darkTheme: boolean}) {
+function TableOddRow(props: {user: User}) {
   const user = props.user;
-  const dark = props.darkTheme;
+  const dark = useContext(ThemeContext);
   const {state, dispatch} = useContext(StoreContext);
 
   return (
