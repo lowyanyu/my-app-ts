@@ -3,10 +3,36 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
+import UserList from './user/UserList';
+import UserForm from './user/UserForm';
+import UserInfo from './user/UserInfo';
+import { UserStoreProvider } from './user/store';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <div style={{padding: '10px'}}>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />} >
+          <Route path="user" element={
+            <UserStoreProvider>
+              <Outlet />
+            </UserStoreProvider>
+          }>
+            <Route index element={<UserList />} />
+            <Route path="add" element={<UserForm />} />
+            <Route path=":userId" element={<UserInfo />} />
+          </Route>
+          <Route path="*" element={
+            <main>
+              <p>Page not found!</p>
+            </main>
+          } />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+    </div>
   </React.StrictMode>,
   document.getElementById('root')
 );

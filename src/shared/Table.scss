@@ -1,0 +1,23 @@
+.table {
+  &__row {
+    &--even {
+      background-color: #ccc;
+      color: #000;
+    }
+    &--odd {
+      background-color: #eee;
+      color: #000;
+    }
+  }
+
+  &--dark &__row {
+    &--even {
+      background-color: #000;
+      color: #fff;
+    }
+    &--odd {
+      background-color: #777;
+      color: #fff;
+    }
+  }
+}
