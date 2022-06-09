@@ -8,12 +8,10 @@ import UserList from './user/UserList';
 import UserForm from './user/UserForm';
 import UserInfo from './user/UserInfo';
 import { UserStoreProvider } from './user/store';
-import Counter from './counter/Counter';
 
 ReactDOM.render(
   <React.StrictMode>
     <div style={{padding: '10px'}}>
-      <Counter />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />} >

@@ -12,7 +12,6 @@ const reducer = (state: any, action: any) => {
 }
 
 const Increment = (props: any) => {
-    const [state, dispatch] = useReducer(reducer, props.state);
     return (
         <>
             State from Increment: {props.state.count}
@@ -22,7 +21,6 @@ const Increment = (props: any) => {
 }
 
 const Decrement = (props: any) => {
-    const [state, dispatch] = useReducer(reducer, props.state);
     return (
         <>
             State from Decrement: {props.state.count}
