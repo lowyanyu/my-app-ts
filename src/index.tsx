@@ -8,30 +8,32 @@ import UserList from './user/UserList';
 import UserForm from './user/UserForm';
 import UserInfo from './user/UserInfo';
 import { UserStoreProvider } from './user/store';
+import Counter from './counter/Counter';
 
 ReactDOM.render(
   <React.StrictMode>
     <div style={{padding: '10px'}}>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} >
-          <Route path="user" element={
-            <UserStoreProvider>
-              <Outlet />
-            </UserStoreProvider>
-          }>
-            <Route index element={<UserList />} />
-            <Route path="add" element={<UserForm />} />
-            <Route path=":userId" element={<UserInfo />} />
+      <Counter />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} >
+            <Route path="user" element={
+              <UserStoreProvider>
+                <Outlet />
+              </UserStoreProvider>
+            }>
+              <Route index element={<UserList />} />
+              <Route path="add" element={<UserForm />} />
+              <Route path=":userId" element={<UserInfo />} />
+            </Route>
+            <Route path="*" element={
+              <main>
+                <p>Page not found!</p>
+              </main>
+            } />
           </Route>
-          <Route path="*" element={
-            <main>
-              <p>Page not found!</p>
-            </main>
-          } />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
     </div>
   </React.StrictMode>,
   document.getElementById('root')
